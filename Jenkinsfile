@@ -30,5 +30,22 @@ pipeline {
         }
       }
     }*/
+    stage('Deploy') {
+			agent { label 'master' }
+			steps {
+				script {
+					withDockerRegistry([credentialsId: 'quay-io-bot', url: 'https://quay.io']) {
+	                    docker.build('$QUAY_REPO:$QUAY_REPO_TAG', '-f Dockerfile .').push('latest')
+	                }
+	                sh 'docker rmi -f $QUAY_REPO:$QUAY_REPO_TAG'
+                }
+			}
+			post {
+				always {
+					deleteDir()
+				}
+			}
+		}
+	}
   }
 }
