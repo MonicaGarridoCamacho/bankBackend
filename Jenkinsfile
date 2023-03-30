@@ -23,18 +23,11 @@ pipeline {
         sh 'mvn clean install'
       }
     }
-    stage('Push image') {
-      steps {
-        docker.withRegistry('https://quay.io', 'quay-credentials') {
-          app.push("${env.BUILD_NUMBER}")
-        }
-      }
-    }
     stage('Deploy') {
 			agent { label 'master' }
 			steps {
 				script {
-					withDockerRegistry([credentialsId: 'quay-io-bot', url: 'https://quay.io']) {
+					withDockerRegistry([credentialsId: 'quay-credentials', url: 'https://quay.io']) {
 	                    docker.build('$QUAY_REPO:$QUAY_REPO_TAG', '-f Dockerfile .').push('latest')
 	                }
 	                sh 'docker rmi -f $QUAY_REPO:$QUAY_REPO_TAG'
