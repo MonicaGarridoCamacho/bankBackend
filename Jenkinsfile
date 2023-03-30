@@ -23,13 +23,13 @@ pipeline {
         sh 'mvn clean install'
       }
     }
-    /*stage('Push image') {
+    stage('Push image') {
       steps {
         docker.withRegistry('https://quay.io', 'quay-credentials') {
           app.push("${env.BUILD_NUMBER}")
         }
       }
-    }*/
+    }∫
     stage('Deploy') {
 			agent { label 'master' }
 			steps {
