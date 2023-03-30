@@ -12,10 +12,10 @@ pipeline {
     }
     stage ('Static code analysis') {
       steps {
-        sh 'mvn clean verify sonar:sonar \
-  -Dsonar.projectKey=devops-pipeline-jenkins \
+       sh 'mvn clean verify sonar:sonar \
+  -Dsonar.projectKey=maven-jerkins-pipeline \
   -Dsonar.host.url=https://sonar-devops.apps.cluster-28w9t.28w9t.sandbox1267.opentlc.com \
-  -Dsonar.login=sqp_8712c9f5876bc62b4044894fba5fcdf5b58f409as'
+  -Dsonar.login=sqp_159782df0f09ed97cde39200b2f79815689a78a6'
       }
     }
     stage ('Build') {
