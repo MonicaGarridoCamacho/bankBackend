@@ -29,7 +29,7 @@ pipeline {
           app.push("${env.BUILD_NUMBER}")
         }
       }
-    }∫
+    }
     stage('Deploy') {
 			agent { label 'master' }
 			steps {
