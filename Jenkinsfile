@@ -1,9 +1,10 @@
 pipeline {
   agent {
          node {
-           label 'maven'
+           label 'pod man'
          }
   }
+
   stages {
     stage ('Code repo & code review') {
       steps {
@@ -23,11 +24,11 @@ pipeline {
         sh 'docker pull quay.io/monica_garrido/do288-hello-java'
       }
     }
-    stage ('Build') {
+    /*stage ('Build') {
       steps {
         sh 'mvn clean install'
       }
-    }
+    }*/
     stage('Deploy') {
 			agent { label 'master' }
 			steps {
