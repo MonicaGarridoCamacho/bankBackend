@@ -10,12 +10,17 @@ pipeline {
         echo 'Code repo & code review'
       }
     }
-    stage ('Static code analysis') {
+    /*stage ('Static code analysis') {
       steps {
      	 sh 'mvn clean verify sonar:sonar \
   -Dsonar.projectKey=maven-jerkins-pipeline \
   -Dsonar.host.url=https://sonar-devops.apps.cluster-hwtmk.hwtmk.sandbox1148.opentlc.com \
   -Dsonar.login=sqp_ba61a7df04605f4c6114391e72807c9bb7a1ea28'
+      }
+    }*/
+    stage ('Container registry') {
+      steps {
+        sh 'podman pull quay.io/monica_garrido/do288-hello-java'
       }
     }
     stage ('Build') {
