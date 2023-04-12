@@ -22,7 +22,7 @@ pipeline {
     stage ('Container registry') {
       agent {
          node {
-           label 'maven'
+           label 'docker'
          }
       }
       steps {
