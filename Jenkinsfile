@@ -20,11 +20,6 @@ pipeline {
       }
     }*/
     stage ('Container registry') {
-      agent {
-         node {
-           label 'docker'
-         }
-      }
       steps {
         sh 'docker pull quay.io/monica_garrido/do288-hello-java'
       }
