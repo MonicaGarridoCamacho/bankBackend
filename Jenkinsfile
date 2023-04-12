@@ -21,7 +21,7 @@ pipeline {
     }*/
     stage ('Container registry') {
       steps {
-        sh 'podman pull quay.io/monica_garrido/do288-hello-java'
+        sh 'docker pull quay.io/monica_garrido/do288-hello-java'
       }
     }
     /*stage ('Build') {
