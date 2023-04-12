@@ -20,9 +20,9 @@ pipeline {
       }
     }*/
     stage ('Container registry') {
-      agent { label 'master' }
+     
       steps {
-        sh 'podman pull quay.io/monica_garrido/do288-hello-java'
+        sh 'docker pull quay.io/monica_garrido/do288-hello-java'
       }
     }
     /*stage ('Build') {
