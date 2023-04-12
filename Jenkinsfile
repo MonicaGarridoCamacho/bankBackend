@@ -3,6 +3,9 @@ pipeline {
          node {
            label 'maven'
          }
+	 node {
+           label 'docker'
+         }
   }
 
   stages {
