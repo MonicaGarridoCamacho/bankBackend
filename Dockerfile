@@ -1,14 +1,12 @@
-# Build the application first using Maven
-FROM maven:3.8-openjdk-11 as build
-USER root
-WORKDIR /app
-COPY . .
-RUN mvn install
+FROM jenkins/jenkins
 
-# Inject the JAR file into a new container to keep the file small
-FROM openjdk:11-jre-slim
-WORKDIR /app
-COPY --from=build /app/target/banking-*.jar /app/app.jar
-EXPOSE 8080
-ENTRYPOINT ["sh", "-c"]
-CMD ["java -jar app.jar"]
+USER root
+
+RUN apt update && apt install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+RUN apt-key fingerprint 0EBFCD88
+RUN add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+RUN apt update && apt install -y docker-ce
+RUN usermod -aG docker jenkins
+
+USER jenkins
