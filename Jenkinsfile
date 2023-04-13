@@ -1,49 +1,69 @@
 pipeline {
   agent {
-         node {
-           label 'master'
+      kubernetes {
+      label 'kubernetes'
+      defaultContainer 'podman'
+     yaml '''
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "jenkins"
+  namespace: "jenkins"
+spec:
+  containers:
+    - name: podman
+      imagePullPolicy: Always
+      image: docker.io/mysticrenji/podman:latest
+      command:
+        - cat
+      tty: true
+      securityContext:
+        privileged: true
+      volumeMounts:
+        - mountPath: /var/lib/containers
+          name: podman-volume
+        - mountPath: /dev/shm
+          name: devshm-volume
+        - mountPath: /var/run
+          name: varrun-volume
+        - mountPath: /tmp
+          name: tmp-volume
+  restartPolicy: Never
+  volumes:
+    - name: podman-volume
+      emptyDir: {}
+    - emptyDir:
+        medium: Memory
+      name: devshm-volume
+    - emptyDir: {}
+      name: varrun-volume
+    - emptyDir: {}
+      name: tmp-volume
+      '''
+      }}
+   stages {
+      stage('Podman Build') {
+         steps {
+            container('podman') {
+              sh '''
+              echo -e 'FROM busybox\nRUN echo "hello world"' | podman --events-backend=file build -t  ghcr.io/mysticrenji/hello:latest -
+              '''
+            }
          }
-  }
-
-  stages {
-    stage ('Code repo & code review') {
-      steps {
-        echo 'Code repo & code review'
       }
-    }
-    /*stage ('Static code analysis') {
-      steps {
-     	 sh 'mvn clean verify sonar:sonar \
-  -Dsonar.projectKey=maven-jerkins-pipeline \
-  -Dsonar.host.url=https://sonar-devops.apps.cluster-hwtmk.hwtmk.sandbox1148.opentlc.com \
-  -Dsonar.login=sqp_ba61a7df04605f4c6114391e72807c9bb7a1ea28'
+      stage('Podman docker-compose') {
+         steps {
+            container('podman') {
+              sh '''
+              git clone https://github.com/mysticrenji/podman-experiments.git
+              cd podman-experiments
+              podman-compose up -d
+              podman-compose down
+              podman images
+              '''
+            }
+         }
       }
-    }*/
-    stage ('Container registry') {
-      steps {
-        sh 'podman pull quay.io/monica_garrido/do288-hello-java'
-      }
-    }
-    /*stage ('Build') {
-      steps {
-        sh 'mvn clean install'
-      }
-    }*/
-    stage('Deploy') {
-			agent { label 'master' }
-			steps {
-				script {
-					withDockerRegistry([credentialsId: 'quay-credentials', url: 'https://quay.io']) {
-	                    docker.build('$QUAY_REPO:$QUAY_REPO_TAG', '-f Dockerfile .').push('latest')
-	                }
-	                sh 'docker rmi -f $QUAY_REPO:$QUAY_REPO_TAG'
-                }
-			}
-			post {
-				always {
-					deleteDir()
-				}
-			}
-		}
-	}
+   }
 }
