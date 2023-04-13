@@ -1,45 +1,49 @@
-pipeline{
+pipeline {
   agent {
-    kubernetes {
-      yaml '''
-        apiVersion: v1
-        kind: Pod
-        metadata:
-          labels:
-            label: jenkins-build
-        spec:
-          serviceAccountName: nonrootbuilder-sa
-          containers:
-          - name: podman-builder
-            image: podman-builder:latest
-            command:
-              - cat
-            tty: true
-            env:
-              - name: HOME
-                value: /home/jenkins/agent'''
-    }
+         node {
+           label 'master'
+         }
   }
-  environment {
-    IMAGE_NAME              = 'podman-build'
-    ARTIFACTORY_ROOT        = "artifactory.domain.com/builds"
-    BUILD_IMAGE             = "podman-build/${IMAGE_NAME}"
-    BUILD_TAG_MINOR         = "b${BUILD_NUMBER}-${GIT_COMMIT_SHORT}"
-    BUILD_IMAGE_FULL        = "${ARTIFACTORY_ROOT}/${BUILD_IMAGE}:${BUILD_TAG_MINOR}"
-    GIT_COMMIT_SHORT        = """${ sh( returnStdout: true, script:'git log --format="%h" -n 1').trim() }"""
-    SOURCE_CODE_ROOT        = "podman-build"
-  }
-  stages{
-    stage('Build Docker Image') {
+
+  stages {
+    stage ('Code repo & code review') {
       steps {
-        container('podman-builder'){
-          dir("${SOURCE_CODE_ROOT}"){
-            sh 'podman info'
-            sh 'podman build -f Dockerfile -t ${BUILD_IMAGE_FULL} --log-level=debug --format=docker .'
-            sh 'podman images'
-          }
-        }
+        echo 'Code repo & code review'
       }
     }
-  } // stages
-} // pipeline
+    /*stage ('Static code analysis') {
+      steps {
+     	 sh 'mvn clean verify sonar:sonar \
+  -Dsonar.projectKey=maven-jerkins-pipeline \
+  -Dsonar.host.url=https://sonar-devops.apps.cluster-hwtmk.hwtmk.sandbox1148.opentlc.com \
+  -Dsonar.login=sqp_ba61a7df04605f4c6114391e72807c9bb7a1ea28'
+      }
+    }*/
+    stage ('Container registry') {
+      steps {
+        sh 'podman pull quay.io/monica_garrido/do288-hello-java'
+      }
+    }
+    /*stage ('Build') {
+      steps {
+        sh 'mvn clean install'
+      }
+    }*/
+    stage('Deploy') {
+			agent { label 'master' }
+			steps {
+				script {
+					withDockerRegistry([credentialsId: 'quay-credentials', url: 'https://quay.io']) {
+	                    docker.build('$QUAY_REPO:$QUAY_REPO_TAG', '-f Dockerfile .').push('latest')
+	                }
+	                sh 'docker rmi -f $QUAY_REPO:$QUAY_REPO_TAG'
+                }
+			}
+			post {
+				always {
+					deleteDir()
+				}
+			}
+		}
+	}
+}
