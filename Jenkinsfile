@@ -1,9 +1,7 @@
 pipeline {
-  agent {
-         node {
-           label 'podman'
-         }
-  }
+  agent  {
+        label 'podman'
+   }
 
   stages {
     stage ('Code repo & code review') {
