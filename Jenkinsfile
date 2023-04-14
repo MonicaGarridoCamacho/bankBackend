@@ -1,8 +1,4 @@
 pipeline {
-  agent  {
-        label 'maven'
-   }
-
   stages {
     stage ('Code repo & code review') {
       steps {
