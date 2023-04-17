@@ -6,19 +6,19 @@ pipeline {
         echo 'Code repo & code review'
       }
     }
-    /*stage ('Static code analysis') {
+    stage ('Static code analysis') {
       steps {
      	 sh 'mvn clean verify sonar:sonar \
-  -Dsonar.projectKey=maven-jerkins-pipeline \
-  -Dsonar.host.url=https://sonar-devops.apps.cluster-hwtmk.hwtmk.sandbox1148.opentlc.com \
-  -Dsonar.login=sqp_ba61a7df04605f4c6114391e72807c9bb7a1ea28'
+  -Dsonar.projectKey=maven-jenkins-pipeline \
+  -Dsonar.host.url=https://sonarqube-client-mgaa-devops-namespace.apps.ocpclientprod1.navan.accenture.com \
+  -Dsonar.login=sqp_04418ae8945ff70fc506da6c6eda6a10837bd1b6'
       }
-    }*/
-    stage ('Container registry') {
+    }
+    /*stage ('Container registry') {
       steps {
         sh 'docker pull quay.io/monica_garrido/do288-hello-java'
       }
-    }
+    }*/
     /*stage ('Build') {
       steps {
         sh 'mvn clean install'
