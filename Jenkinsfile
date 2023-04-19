@@ -28,7 +28,7 @@ pipeline {
         sh 'mvn clean install'
       }
     }
-    /*stage('Deploy') {
+    stage('Deploy') {
 			agent { label 'master' }
 			steps {
 				script {
@@ -44,5 +44,5 @@ pipeline {
 				}
 			}
 		}
-	}*/
+	}
 }
