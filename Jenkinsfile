@@ -18,17 +18,17 @@ pipeline {
   -Dsonar.login=sqp_3d2d679a81811eab3680c76764a80f9191f12735'
       }
     }
-    /*stage ('Container registry') {
+    stage ('Container registry') {
       steps {
-        sh 'docker pull quay.io/monica_garrido/do288-hello-java'
+        sh 'podman pull registry-quay-clientprod.apps.ocpmgmt.navan.accenture.com/client_mgaa/bank_example'
       }
-    }*/
-    /*stage ('Build') {
+    }
+    stage ('Build') {
       steps {
         sh 'mvn clean install'
       }
-    }*/
-    stage('Deploy') {
+    }
+    /*stage('Deploy') {
 			agent { label 'master' }
 			steps {
 				script {
@@ -44,5 +44,5 @@ pipeline {
 				}
 			}
 		}
-	}
+	}*/
 }
