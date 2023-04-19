@@ -15,7 +15,7 @@ pipeline {
      	 sh 'mvn clean verify sonar:sonar \
   -Dsonar.projectKey=maven-jenkins-pipeline \
   -Dsonar.host.url=https://sonarqube-client-mgaa-devops-namespace.apps.ocpclientprod1.navan.accenture.com \
-  -Dsonar.login=sqp_04418ae8945ff70fc506da6c6eda6a10837bd1b6'
+  -Dsonar.login=sqp_3d2d679a81811eab3680c76764a80f9191f12735'
       }
     }
     /*stage ('Container registry') {
