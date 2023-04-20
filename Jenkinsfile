@@ -20,7 +20,7 @@ pipeline {
     }*/
     stage ('Container registry') {
       steps {
-        sh 'pod man pull registry-quay-clientprod.apps.ocpmgmt.navan.accenture.com/client_mgaa/bank_example'
+        sh 'podman pull registry-quay-clientprod.apps.ocpmgmt.navan.accenture.com/client_mgaa/bank_example'
       }
     }
     stage ('Build') {
