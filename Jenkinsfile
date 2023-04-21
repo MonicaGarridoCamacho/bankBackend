@@ -1,8 +1,6 @@
 pipeline {
   agent {
-         node {
-           label 'maven'
-         }
+        docker { image 'node:16-alpine' }
   }
   stages {
     stage ('Code repo & code review') {
