@@ -1,7 +1,10 @@
 pipeline {
-  agent {
-        docker { image 'node:16-alpine' }
+  environment {
+    registry = "anishnath/mkdocs"
+    registryCredential = 'docker-creds'
+    dockerImage = ''
   }
+  agent any
   stages {
     stage ('Code repo & code review') {
       steps {
