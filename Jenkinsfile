@@ -11,7 +11,7 @@ final NEXUS_URL = 'nexus.local:8081'
 stage('Build') {
     node {
         git GIT_URL
-        withEnv(["PATH+MAVEN=${tool 'm3'}/bin"]) {
+        withEnv(["PATH+MAVEN=src/bin"]) {
             if(FULL_BUILD) {
                 def pom = readMavenPom file: 'pom.xml'
                 sh "mvn -B versions:set -DnewVersion=${pom.version}-${BUILD_NUMBER}"
@@ -25,7 +25,7 @@ stage('Build') {
 if(FULL_BUILD) {
     stage('Unit Tests') {   
         node {
-            withEnv(["PATH+MAVEN=${tool 'm3'}/bin"]) {
+            withEnv(["PATH+MAVEN=${src/bin"]) {
                 sh "mvn -B clean test"
                 stash name: "unit_tests", includes: "target/surefire-reports/**"
             }
@@ -36,7 +36,7 @@ if(FULL_BUILD) {
 if(FULL_BUILD) {
     stage('Integration Tests') {
         node {
-            withEnv(["PATH+MAVEN=${tool 'm3'}/bin"]) {
+            withEnv(["PATH+MAVEN=${src/bin"]) {
                 sh "mvn -B clean verify -Dsurefire.skip=true"
                 stash name: 'it_tests', includes: 'target/failsafe-reports/**'
             }
@@ -47,7 +47,7 @@ if(FULL_BUILD) {
 if(FULL_BUILD) {
     stage('Static Analysis') {
         node {
-            withEnv(["PATH+MAVEN=${tool 'm3'}/bin"]) {
+            withEnv(["PATH+MAVEN=${src/bin"]) {
                 withSonarQubeEnv('sonar'){
                     unstash 'it_tests'
                     unstash 'unit_tests'
