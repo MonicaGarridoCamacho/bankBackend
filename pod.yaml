@@ -1,0 +1,176 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "openshift-sdn",
+          "interface": "eth0",
+          "ips": [
+              "10.128.2.13"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "openshift-sdn",
+          "interface": "eth0",
+          "ips": [
+              "10.128.2.13"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    kubernetes.io/limit-ranger: 'LimitRanger plugin set: cpu request for container
+      jenkins; cpu limit for container jenkins'
+    openshift.io/deployment-config.latest-version: "1"
+    openshift.io/deployment-config.name: jenkins
+    openshift.io/deployment.name: jenkins-1
+    openshift.io/scc: restricted
+  creationTimestamp: "2023-04-13T07:46:12Z"
+  generateName: jenkins-1-
+  labels:
+    deployment: jenkins-1
+    deploymentconfig: jenkins
+    name: jenkins
+  name: jenkins-1-vw85b
+  namespace: jenkins-devops
+  ownerReferences:
+  - apiVersion: v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicationController
+    name: jenkins-1
+    uid: 7488560e-8d2c-4917-a4c2-ed8a1b791731
+  resourceVersion: "648917"
+  uid: 839c00f1-cbd8-4e77-a1f3-b64a9b9f09c9
+spec:
+  containers:
+  - env:
+    - name: OPENSHIFT_ENABLE_OAUTH
+      value: "true"
+    - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
+      value: "true"
+    - name: DISABLE_ADMINISTRATIVE_MONITORS
+      value: "false"
+    - name: KUBERNETES_MASTER
+      value: https://kubernetes.default:443
+    - name: KUBERNETES_TRUST_CERTIFICATES
+      value: "true"
+    - name: JENKINS_SERVICE_NAME
+      value: jenkins
+    - name: JNLP_SERVICE_NAME
+      value: jenkins-jnlp
+    - name: JENKINS_UC_INSECURE
+      value: "false"
+    - name: CASC_JENKINS_CONFIG
+      value: /var/lib/jenkins/proxy.yaml
+    image: image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:ab760a3f334a8ba8a78aa982f9db01bd5a624f841dce7dba30f4c5a73a147960
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 2
+      httpGet:
+        path: /login
+        port: 8080
+        scheme: HTTP
+      initialDelaySeconds: 420
+      periodSeconds: 360
+      successThreshold: 1
+      timeoutSeconds: 240
+    name: jenkins
+    readinessProbe:
+      failureThreshold: 3
+      httpGet:
+        path: /login
+        port: 8080
+        scheme: HTTP
+      initialDelaySeconds: 3
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 240
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1Gi
+      requests:
+        cpu: 50m
+        memory: 1Gi
+    securityContext:
+      capabilities:
+        drop:
+        - KILL
+        - MKNOD
+        - SETGID
+        - SETUID
+      privileged: false
+      runAsUser: 1000700000
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/jenkins
+      name: jenkins-data
+    - mountPath: /etc/pki/ca-trust/source/anchors
+      name: jenkins-trusted-ca-bundle
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-xdx9b
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  imagePullSecrets:
+  - name: jenkins-dockercfg-x7qmc
+  nodeName: ip-10-0-204-199.us-east-2.compute.internal
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext:
+    fsGroup: 1000700000
+    seLinuxOptions:
+      level: s0:c26,c25
+  serviceAccount: jenkins
+  serviceAccountName: jenkins
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+  volumes:
+  - emptyDir: {}
+    name: jenkins-data
+  - configMap:
+      defaultMode: 420
+      name: jenkins-trusted-ca-bundle
+      optional: true
+    name: jenkins-trusted-ca-bundle
+  - name: kube-api-access-xdx9b
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+      - configMap:
+          items:
+          - key: service-ca.crt
+            path: service-ca.crt
+          name: openshift-service-ca.crt

@@ -1,0 +1,475 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: jenkins
+  namespace: jenkins-moni
+  uid: 4d0ae53c-5eb2-4004-92ab-f20ff76766c7
+  resourceVersion: '688271'
+  creationTimestamp: '2023-04-13T09:28:48Z'
+  labels:
+    app.kubernetes.io/instance: jenkins
+    app.kubernetes.io/name: jenkins
+    deployment: jenkins-1
+    deploymentconfig: jenkins
+  annotations:
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "openshift-sdn",
+          "interface": "eth0",
+          "ips": [
+              "10.128.2.14"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "openshift-sdn",
+          "interface": "eth0",
+          "ips": [
+              "10.128.2.14"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    kubernetes.io/limit-ranger: >-
+      LimitRanger plugin set: cpu request for container jenkins; cpu limit for
+      container jenkins
+    openshift.io/deployment-config.latest-version: '1'
+    openshift.io/deployment-config.name: jenkins
+    openshift.io/deployment.name: jenkins-1
+    openshift.io/scc: restricted
+  ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: jenkins-1
+      uid: 137703c3-2fd2-4861-af3b-d854aab8577f
+      controller: true
+      blockOwnerDeletion: true
+  managedFields:
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2023-04-13T09:28:48Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:openshift.io/deployment-config.latest-version': {}
+            'f:openshift.io/deployment-config.name': {}
+            'f:openshift.io/deployment.name': {}
+          'f:generateName': {}
+          'f:labels':
+            .: {}
+            'f:app.kubernetes.io/instance': {}
+            'f:app.kubernetes.io/name': {}
+            'f:deployment': {}
+            'f:deploymentconfig': {}
+          'f:ownerReferences':
+            .: {}
+            'k:{"uid":"137703c3-2fd2-4861-af3b-d854aab8577f"}': {}
+        'f:spec':
+          'f:containers':
+            'k:{"name":"jenkins"}':
+              .: {}
+              'f:env':
+                .: {}
+                'k:{"name":"CASC_JENKINS_CONFIG"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+                'k:{"name":"DISABLE_ADMINISTRATIVE_MONITORS"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+                'k:{"name":"ENABLE_FATAL_ERROR_LOG_FILE"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+                'k:{"name":"JENKINS_SERVICE_NAME"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+                'k:{"name":"JENKINS_UC_INSECURE"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+                'k:{"name":"JNLP_SERVICE_NAME"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+                'k:{"name":"KUBERNETES_MASTER"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+                'k:{"name":"KUBERNETES_TRUST_CERTIFICATES"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+                'k:{"name":"OPENSHIFT_ENABLE_OAUTH"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+                'k:{"name":"OPENSHIFT_ENABLE_REDIRECT_PROMPT"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+              'f:image': {}
+              'f:imagePullPolicy': {}
+              'f:livenessProbe':
+                .: {}
+                'f:failureThreshold': {}
+                'f:httpGet':
+                  .: {}
+                  'f:path': {}
+                  'f:port': {}
+                  'f:scheme': {}
+                'f:initialDelaySeconds': {}
+                'f:periodSeconds': {}
+                'f:successThreshold': {}
+                'f:timeoutSeconds': {}
+              'f:name': {}
+              'f:readinessProbe':
+                .: {}
+                'f:failureThreshold': {}
+                'f:httpGet':
+                  .: {}
+                  'f:path': {}
+                  'f:port': {}
+                  'f:scheme': {}
+                'f:initialDelaySeconds': {}
+                'f:periodSeconds': {}
+                'f:successThreshold': {}
+                'f:timeoutSeconds': {}
+              'f:resources':
+                .: {}
+                'f:limits':
+                  .: {}
+                  'f:memory': {}
+                'f:requests':
+                  .: {}
+                  'f:memory': {}
+              'f:securityContext':
+                .: {}
+                'f:capabilities': {}
+                'f:privileged': {}
+              'f:terminationMessagePath': {}
+              'f:terminationMessagePolicy': {}
+              'f:volumeMounts':
+                .: {}
+                'k:{"mountPath":"/etc/pki/ca-trust/source/anchors"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                'k:{"mountPath":"/var/lib/jenkins"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+          'f:dnsPolicy': {}
+          'f:enableServiceLinks': {}
+          'f:restartPolicy': {}
+          'f:schedulerName': {}
+          'f:securityContext': {}
+          'f:serviceAccount': {}
+          'f:serviceAccountName': {}
+          'f:terminationGracePeriodSeconds': {}
+          'f:volumes':
+            .: {}
+            'k:{"name":"jenkins-data"}':
+              .: {}
+              'f:emptyDir': {}
+              'f:name': {}
+            'k:{"name":"jenkins-trusted-ca-bundle"}':
+              .: {}
+              'f:configMap':
+                .: {}
+                'f:defaultMode': {}
+                'f:name': {}
+                'f:optional': {}
+              'f:name': {}
+    - manager: multus
+      operation: Update
+      apiVersion: v1
+      time: '2023-04-13T09:28:49Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:k8s.v1.cni.cncf.io/network-status': {}
+            'f:k8s.v1.cni.cncf.io/networks-status': {}
+      subresource: status
+    - manager: Go-http-client
+      operation: Update
+      apiVersion: v1
+      time: '2023-04-13T09:41:15Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:conditions':
+            'k:{"type":"ContainersReady"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Initialized"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Ready"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+          'f:containerStatuses': {}
+          'f:hostIP': {}
+          'f:phase': {}
+          'f:podIP': {}
+          'f:podIPs':
+            .: {}
+            'k:{"ip":"10.128.2.14"}':
+              .: {}
+              'f:ip': {}
+          'f:startTime': {}
+      subresource: status
+spec:
+  volumes:
+    - name: podman-volume
+      emptyDir: {}
+    - name: devshm-volume
+      emptyDir:
+        medium: Memory
+    - name: varrun-volume
+      emptyDir: {}
+    - name: tmp-volume
+      emptyDir: {}
+    - name: kube-api-access-5zj9m
+      projected:
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+                - key: ca.crt
+                  path: ca.crt
+          - downwardAPI:
+              items:
+                - path: namespace
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+          - configMap:
+              name: openshift-service-ca.crt
+              items:
+                - key: service-ca.crt
+                  path: service-ca.crt
+        defaultMode: 420
+    - name: jenkins-data
+      emptyDir: {}
+    - name: jenkins-trusted-ca-bundle
+      configMap:
+        name: jenkins-trusted-ca-bundle
+        defaultMode: 420
+        optional: true
+    - name: kube-api-access-7r7rg
+      projected:
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+                - key: ca.crt
+                  path: ca.crt
+          - downwardAPI:
+              items:
+                - path: namespace
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+          - configMap:
+              name: openshift-service-ca.crt
+              items:
+                - key: service-ca.crt
+                  path: service-ca.crt
+        defaultMode: 420
+  containers:
+    - name: jenkins
+      image: >-
+        image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:ab760a3f334a8ba8a78aa982f9db01bd5a624f841dce7dba30f4c5a73a147960
+      env:
+        - name: OPENSHIFT_ENABLE_OAUTH
+          value: 'true'
+        - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
+          value: 'true'
+        - name: DISABLE_ADMINISTRATIVE_MONITORS
+          value: 'false'
+        - name: KUBERNETES_MASTER
+          value: 'https://kubernetes.default:443'
+        - name: KUBERNETES_TRUST_CERTIFICATES
+          value: 'true'
+        - name: JENKINS_SERVICE_NAME
+          value: jenkins
+        - name: JNLP_SERVICE_NAME
+          value: jenkins-jnlp
+        - name: ENABLE_FATAL_ERROR_LOG_FILE
+          value: 'false'
+        - name: JENKINS_UC_INSECURE
+          value: 'false'
+        - name: CASC_JENKINS_CONFIG
+          value: /var/lib/jenkins/proxy.yaml
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 1Gi
+      volumeMounts:
+        - name: jenkins-data
+          mountPath: /var/lib/jenkins
+        - name: jenkins-trusted-ca-bundle
+          mountPath: /etc/pki/ca-trust/source/anchors
+        - name: kube-api-access-7r7rg
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      livenessProbe:
+        httpGet:
+          path: /login
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 420
+        timeoutSeconds: 240
+        periodSeconds: 360
+        successThreshold: 1
+        failureThreshold: 2
+      readinessProbe:
+        httpGet:
+          path: /login
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 3
+        timeoutSeconds: 240
+        periodSeconds: 10
+        successThreshold: 1
+        failureThreshold: 3
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        capabilities:
+          drop:
+            - KILL
+            - MKNOD
+            - SETGID
+            - SETUID
+        privileged: false
+        runAsUser: 1000720000
+    - name: podman
+      image: >-
+        docker.io/mysticrenji/podman
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1536Mi
+        requests:
+          cpu: 50m
+          memory: 256Mi
+      volumeMounts:
+        - name: podman-volume
+          mountPath: /var/lib/containers
+        - name: devshm-volume
+          mountPath: /dev/shm
+        - name: varrun-volume
+          mountPath: /var/run
+        - name: tmp-volume
+          mountPath: /tmp
+        - name: kube-api-access-5zj9m
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      imagePullPolicy: IfNotPresent
+      securityContext:
+        capabilities:
+          drop:
+            - KILL
+            - MKNOD
+            - SETGID
+            - SETUID
+        privileged: false
+        runAsUser: 1000720000
+  restartPolicy: Always
+  terminationGracePeriodSeconds: 30
+  dnsPolicy: ClusterFirst
+  serviceAccountName: jenkins
+  serviceAccount: jenkins
+  nodeName: ip-10-0-204-199.us-east-2.compute.internal
+  securityContext:
+    seLinuxOptions:
+      level: 's0:c27,c9'
+    fsGroup: 1000720000
+  imagePullSecrets:
+    - name: jenkins-dockercfg-g24pl
+  schedulerName: default-scheduler
+  tolerations:
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+    - key: node.kubernetes.io/memory-pressure
+      operator: Exists
+      effect: NoSchedule
+  priority: 0
+  enableServiceLinks: true
+  preemptionPolicy: PreemptLowerPriority
+status:
+  phase: Running
+  conditions:
+    - type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2023-04-13T09:28:48Z'
+    - type: Ready
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2023-04-13T09:41:15Z'
+    - type: ContainersReady
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2023-04-13T09:41:15Z'
+    - type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2023-04-13T09:28:48Z'
+  hostIP: 10.0.204.199
+  podIP: 10.128.2.14
+  podIPs:
+    - ip: 10.128.2.14
+  startTime: '2023-04-13T09:28:48Z'
+  containerStatuses:
+    - name: jenkins
+      state:
+        running:
+          startedAt: '2023-04-13T09:28:50Z'
+      lastState: {}
+      ready: true
+      restartCount: 0
+      image: >-
+        image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:ab760a3f334a8ba8a78aa982f9db01bd5a624f841dce7dba30f4c5a73a147960
+      imageID: >-
+        image-registry.openshift-image-registry.svc:5000/openshift/jenkins@sha256:ab760a3f334a8ba8a78aa982f9db01bd5a624f841dce7dba30f4c5a73a147960
+      containerID: 'cri-o://8322f52002ca49254d934c5cc9f447d11af436b88a03e9f792d038ef7579f359'
+      started: true
+  qosClass: Burstable

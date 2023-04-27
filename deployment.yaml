@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podman
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: podman
+  template:
+    metadata:
+      labels:
+        app: podman
+    spec:
+      serviceAccount: jenkins
+      serviceAccountName: jenkins
+      securityContext:
+        runAsUser: 1000
+      containers:
+        - name: podman
+          command: [ "tail" ]
+          args: [ "-f", "/dev/null" ]
+          image: "mgoltzsche/podman"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          securityContext:
+            capabilities:
+              add: [ "SETUID", "FSETID", "SYS_RESOURCE" ]
