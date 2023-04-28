@@ -41,7 +41,7 @@ spec:
             https://github.com/MonicaGarridoCamacho/bankBackend/blob/main/deployment.yaml
             -n example-bank
       runAfter:
-        - build-transaction
+        - code-analysis
       taskRef:
         kind: Task
         name: openshift-client
