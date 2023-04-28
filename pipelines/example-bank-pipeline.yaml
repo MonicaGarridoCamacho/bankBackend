@@ -33,26 +33,6 @@ spec:
       workspaces:
         - name: maven-repo
           workspace: local-maven-repo
-    - name: build-transaction
-      params:
-        - name: TLSVERIFY
-          value: 'false'
-        - name: MAVEN_ARGS_APPEND
-          value: '-pl :bank-app-backend -am package'
-        - name: PATH_CONTEXT
-          value: bank-app-backend/
-      resources:
-        inputs:
-          - name: source
-            resource: bank-git
-        outputs:
-          - name: image
-            resource: transaction-image
-      runAfter:
-        - code-analysis
-      taskRef:
-        kind: Task
-        name: s2i-java-8
     - name: deploy-transaction
       params:
         - name: COMMANDS
