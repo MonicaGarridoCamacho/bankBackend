@@ -33,5 +33,19 @@ spec:
       workspaces:
         - name: maven-repo
           workspace: local-maven-repo
+    - name: build
+      params:
+        - name: GOALS
+          value: ["package"]
+      resources:
+        inputs:
+          - name: source
+            resource: bank-git
+      taskRef:
+        kind: Task
+        name: maven
+      workspaces:
+        - name: maven-repo
+          workspace: local-maven-repo
   workspaces:
     - name: local-maven-repo
