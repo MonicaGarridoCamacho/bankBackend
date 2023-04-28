@@ -40,5 +40,8 @@ spec:
         name: maven
       runAfter:
         - code-analysis
+      workspaces:
+        - name: maven-repo
+          workspace: local-maven-repo
   workspaces:
     - name: local-maven-repo
