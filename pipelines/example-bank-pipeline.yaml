@@ -6,12 +6,6 @@ spec:
   resources:
     - name: bank-git
       type: git
-    - name: transaction-image
-      type: image
-    - name: user-image
-      type: image
-    - name: ui-image
-      type: image
   tasks:
     - name: code-analysis
       params:
@@ -44,8 +38,7 @@ spec:
       taskRef:
         kind: Task
         name: maven
-      workspaces:
-        - name: maven-repo
-          workspace: local-maven-repo
+      runAfter:
+        - code-analysis
   workspaces:
     - name: local-maven-repo
