@@ -7,6 +7,24 @@ spec:
     - name: bank-git
       type: git
   tasks:
+    - name: clone-repo
+      params:
+        - name: url
+          value: "$(params.gitUrl)"
+        - name: subdirectory
+          value: "."
+        - name: deleteExisting
+          value: "true"
+      resources:
+        inputs:
+          - name: source
+            resource: bank-git
+      taskRef:
+        kind: Task
+        name: git-clone
+      workspaces:
+        - name: maven-repo
+          workspace: local-maven-repo
     - name: code-analysis
       params:
         - name: GOALS
@@ -24,6 +42,8 @@ spec:
       taskRef:
         kind: Task
         name: maven
+      runAfter:
+        - git-cloe
       workspaces:
         - name: maven-repo
           workspace: local-maven-repo
