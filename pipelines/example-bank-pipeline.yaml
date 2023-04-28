@@ -33,17 +33,5 @@ spec:
       workspaces:
         - name: maven-repo
           workspace: local-maven-repo
-    - name: deploy-transaction
-      params:
-        - name: COMMANDS
-          value: >
-            oc apply -f
-            https://github.com/MonicaGarridoCamacho/bankBackend/blob/main/deployment.yaml
-            -n example-bank
-      runAfter:
-        - code-analysis
-      taskRef:
-        kind: Task
-        name: openshift-client
   workspaces:
     - name: local-maven-repo
