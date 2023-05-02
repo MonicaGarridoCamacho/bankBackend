@@ -40,7 +40,7 @@ spec:
           value:
             - install
             - 'sonar:sonar'
-            - '-Dsonar.host.url=https://sonarqube-bank-infra.apps.cluster-pccdc.pccdc.sandbox1982.opentlc.com'
+            - '-Dsonar.host.url=https://sonarqube-moni.apps.cluster-pccdc.pccdc.sandbox1982.opentlc.com'
             - '-Dsonar.userHome=/tmp/sonar'
             - '-DskipITs'
             - '-Darguments=-DskipITs'
