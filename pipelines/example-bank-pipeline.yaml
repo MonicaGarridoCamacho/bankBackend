@@ -6,24 +6,33 @@ spec:
   resources:
     - name: bank-git
       type: git
+  params:
+    - default: bank-app-backend
+      name: APP_NAME
+      type: string
+    - default: 'https://github.com/MonicaGarridoCamacho/bankBackend'
+      name: GIT_REPO
+      type: string
+    - default: ''
+      name: GIT_REVISION
+      type: string
   tasks:
-    - name: clone-repo
+    - name: fetch-repository
       params:
         - name: url
-          value: "$(params.gitUrl)"
+          value: $(params.GIT_REPO)
+        - name: revision
+          value: $(params.GIT_REVISION)
         - name: subdirectory
-          value: "."
+          value: ''
         - name: deleteExisting
-          value: "true"
-      resources:
-        inputs:
-          - name: source
-            resource: bank-git
+          value: 'true'
       taskRef:
-        kind: Task
+        kind: ClusterTask
         name: git-clone
       workspaces:
-        - name: maven-repo
+        - name: output
+          workspace: -repo
           workspace: local-maven-repo
     - name: code-analysis
       params:
@@ -31,7 +40,7 @@ spec:
           value:
             - install
             - 'sonar:sonar'
-            - '-Dsonar.host.url=https://sonarqube-bank-infra.apps.cluster-brsdz.brsdz.sandbox1933.opentlc.com'
+            - '-Dsonar.host.url=https://sonarqube-bank-infra.apps.cluster-pccdc.pccdc.sandbox1982.opentlc.com'
             - '-Dsonar.userHome=/tmp/sonar'
             - '-DskipITs'
             - '-Darguments=-DskipITs'
@@ -43,7 +52,7 @@ spec:
         kind: Task
         name: maven
       runAfter:
-        - git-cloe
+        - fetch-repository
       workspaces:
         - name: maven-repo
           workspace: local-maven-repo
@@ -63,5 +72,14 @@ spec:
       workspaces:
         - name: maven-repo
           workspace: local-maven-repo
+    - name: deploy
+      params:
+        - name: SCRIPT
+          value: oc rollout status deploy/$(params.APP_NAME)
+      runAfter:
+        - build
+      taskRef:
+        kind: ClusterTask
+        name: openshift-client
   workspaces:
     - name: local-maven-repo
