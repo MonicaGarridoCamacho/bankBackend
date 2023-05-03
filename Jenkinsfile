@@ -1,10 +1,9 @@
 pipeline {
-  environment {
-    registry = "anishnath/mkdocs"
-    registryCredential = 'docker-creds'
-    dockerImage = ''
+  agent {
+         node {
+           label 'maven'
+         }
   }
-  agent any
   stages {
     stage ('Code repo & code review') {
       steps {
