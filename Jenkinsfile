@@ -11,14 +11,14 @@ pipeline {
         echo 'Code repo & code review'
       }
     }
-    /*stage ('Static code analysis') {
+    stage ('Static code analysis') {
       steps {
-     	 sh 'mvn clean verify sonar:sonar \
-  -Dsonar.projectKey=maven-jenkins-pipeline \
-  -Dsonar.host.url=https://sonarqube-client-mgaa-devops-namespace.apps.ocpclientprod1.navan.accenture.com \
-  -Dsonar.login=sqp_3d2d679a81811eab3680c76764a80f9191f12735'
+     	 sh 'mvn sonar:sonar \
+  -Dsonar.projectKey=maven-jerkins-pipeline \
+  -Dsonar.host.url=https://sonarqube-bank-infra.apps.cluster-d7qxw.d7qxw.sandbox2290.opentlc.com \
+  -Dsonar.login=271450aef7793b127994c55634ec10a4b7186c68'
       }
-    }*/
+    }
     stage ('Container registry') {
       steps {
         sh 'docker pull registry-quay-clientprod.apps.ocpmgmt.navan.accenture.com/client_mgaa/bank_example'
