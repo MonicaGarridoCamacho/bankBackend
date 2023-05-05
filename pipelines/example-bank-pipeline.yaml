@@ -40,7 +40,9 @@ spec:
           value:
             - install
             - 'sonar:sonar'
-            - '-Dsonar.host.url=https://sonarqube-bank-infra.apps.cluster-d7qxw.d7qxw.sandbox2290.opentlc.com'
+            - '-Dsonar.login=admin'
+            - '-Dsonar.password=admin'
+            - '-Dsonar.host.url=https://sonarqube-devops.apps.cluster-d7qxw.d7qxw.sandbox2290.opentlc.com'
             - '-Dsonar.userHome=/tmp/sonar'
             - '-DskipITs'
             - '-Darguments=-DskipITs'
@@ -72,14 +74,31 @@ spec:
       workspaces:
         - name: maven-repo
           workspace: local-maven-repo
-    - name: deploy
+    - name: s2i-python
       params:
-        - name: SCRIPT
-          value: oc rollout status deploy/$(params.APP_NAME)
+        - name: VERSION
+          value: latest
+        - name: PATH_CONTEXT
+          value: .
+        - name: TLSVERIFY
+          value: 'true'
+        - name: IMAGE
+          value: quay.io/monica_garrido/bank-backend
+        - name: BUILDER_IMAGE
+          value: >-
+            registry.redhat.io/rhel8/buildah@sha256:0a86ecbdfbe86e9d225b7fe4b090a0dd6d323f8afdfdf2bd933ff223ddb53320
+        - name: SKIP_PUSH
+          value: 'false'
+        - name: ENV_VARS
+          value: []
       runAfter:
         - build
       taskRef:
         kind: ClusterTask
-        name: openshift-client
+        name: s2i-python
+      workspaces:
+        - name: source
+          workspace: local-maven-repo
   workspaces:
     - name: local-maven-repo
+  
