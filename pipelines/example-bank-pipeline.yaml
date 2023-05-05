@@ -74,7 +74,7 @@ spec:
       workspaces:
         - name: maven-repo
           workspace: local-maven-repo
-    - name: s2i-python
+    - name: deploys
       params:
         - name: VERSION
           value: latest
@@ -95,7 +95,7 @@ spec:
         - build
       taskRef:
         kind: ClusterTask
-        name: s2i-python
+        name: s2i-java
       workspaces:
         - name: source
           workspace: local-maven-repo
