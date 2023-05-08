@@ -41,8 +41,8 @@ spec:
             - install
             - 'sonar:sonar'
             - '-Dsonar.login=admin'
-            - '-Dsonar.password=admin'
-            - '-Dsonar.host.url=https://sonarqube-devops.apps.cluster-d7qxw.d7qxw.sandbox2290.opentlc.com'
+            - '-Dsonar.password=password'
+            - '-Dsonar.host.url=https://sonarqube-bank-infra.apps.cluster-8n8p5.8n8p5.sandbox2712.opentlc.com'
             - '-Dsonar.userHome=/tmp/sonar'
             - '-DskipITs'
             - '-Darguments=-DskipITs'
