@@ -1,0 +1,76 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bank-backend
+  labels:
+    app: bank-backend
+    app.kubernetes.io/component: bank-backend
+    app.kubernetes.io/instance: bank-backend
+    app.kubernetes.io/name: bank-backend
+    app.kubernetes.io/part-of: bank-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bank-backend
+      name: bank-backend
+  template:
+    metadata:
+      labels:
+        app: bank-backend
+        name: bank-backend
+    spec:
+      containers:
+      - name: bank-backend
+        imagePullPolicy: Always
+        image: >-
+            image-registry.openshift-image-registry.svc:5000/bank-infra/bank-backend@sha256:c2669eb5beda00ecc657e3c76113c1ead024c3269bd03c79c4b60372e470ebff
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+          - containerPort: 8443
+            protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 4Gi
+          requests:
+            cpu: 200m
+            memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: bank-backend
+  name: bank-backend
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: 8443-tcp
+      protocol: TCP
+      port: 8443
+      targetPort: 8443
+  selector:
+    app: bank-backend
+    name: bank-backend
+  type: ClusterIP
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: bank-backend
+spec:
+  port:
+    targetPort: 8080-tcp
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: bank-backend
+    weight: 100
+  wildcardPolicy: None
