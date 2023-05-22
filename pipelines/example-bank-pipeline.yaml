@@ -42,7 +42,7 @@ spec:
             - 'sonar:sonar'
             - '-Dsonar.login=admin'
             - '-Dsonar.password=password'
-            - '-Dsonar.host.url=https://sonarqube-bank-infra.apps.cluster-jrhww.jrhww.sandbox2679.opentlc.com'
+            - '-Dsonar.host.url=https://sonarqube-backend.apps.cluster-6tz59.6tz59.sandbox29.opentlc.com'
             - '-Dsonar.userHome=/tmp/sonar'
             - '-DskipITs'
             - '-Darguments=-DskipITs'
