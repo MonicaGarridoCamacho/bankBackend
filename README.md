@@ -1,6 +1,6 @@
 # PASOS
-PASOS DE DB2 Y SKUPPER
-	1)	Desde la máquina virtual, en el perfil Moni, accedemos a OpenShift, creamos proyecto (bank-infra) e iniciamos Skupper.
+## PASOS DE DB2 Y SKUPPER
+###	1)	Desde la máquina virtual, en el perfil Moni, accedemos a OpenShift, creamos proyecto (bank-infra) e iniciamos Skupper.
 	⁃	skupper init --site-name bank-infra --console-auth=internal --console-user=admin --console-password=password
 	2)	reboot (cambiar de usuario al db2)
 	3)	
