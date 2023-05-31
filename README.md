@@ -1,6 +1,6 @@
 # PASOS
 ## PASOS DE DB2 Y SKUPPER
-###	1)	Desde la máquina virtual, en el perfil Moni, accedemos a OpenShift, creamos proyecto (bank-infra) e iniciamos Skupper.
+	1)	Desde la máquina virtual, en el perfil Moni, accedemos a OpenShift, creamos proyecto (bank-infra) e iniciamos Skupper.
 	⁃	skupper init --site-name bank-infra --console-auth=internal --console-user=admin --console-password=password
 	2)	reboot (cambiar de usuario al db2)
 	3)	
@@ -13,7 +13,7 @@
 	8)	skupper gateway expose db 0.0.0.0 25010 --type pod man
 	9)	Cojo desde oc get sec, el IP de db y modifico en los application.properties de la aplicación Java por el nuevo IP y subo a git
 
-PASOS TEKTON PIPELINE
+## PASOS TEKTON PIPELINE
 	1)	Login al cluster: oc login
 	2)	Install Tekton: Operators Hub —>  Openshift Pipelines Operator.
 	3)	Create a new project: 
@@ -46,5 +46,5 @@ PASOS TEKTON PIPELINE
 	⁃	Registry server address: quay.io
 	⁃	Accedemos a quay.io —> monica_garrido —> Account Settings —> Robot —> View Credentials, copiar username y password y lo añadimos y lo validamos en el check y Start.
 
-VULNERABILITY ANALYSIS (QUAY)
+## VULNERABILITY ANALYSIS (QUAY)
 Acceder a Quay.io —> Repositories —> bank-backend —> Tags —> Clicar en el MANIFEST —> Icono de debug (Security Scan).
