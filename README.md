@@ -2,16 +2,15 @@
 ## PASOS DE DB2 Y SKUPPER
 	1)	Desde la máquina virtual, en el perfil Moni, accedemos a OpenShift, creamos proyecto (bank-infra) e iniciamos Skupper.
 	⁃	skupper init --site-name bank-infra --console-auth=internal --console-user=admin --console-password=password
-	2)	reboot (cambiar de usuario al db2)
-	3)	
-	4)	Hacer login en db2inst1
-	5)	oc login y oc project bank-infra
-	6)	Conectarse a la bbdd en otro terminal db2
+	2)	reboot (cambiar de usuario al db2)	
+	3)	Hacer login en db2inst1
+	4)	oc login y oc project bank-infra
+	5)	Conectarse a la bbdd en otro terminal db2
 	⁃	CONNECT TO OPENBANK USER db2inst1 USING db2inst1
-	7)	En el terminal de oc login y oc project
+	6)	En el terminal de oc login y oc project
 	⁃	skupper gateway init --type podman --namespace bank-infra. (Si da error skipper gateway delete y de nuevo init.)
-	8)	skupper gateway expose db 0.0.0.0 25010 --type pod man
-	9)	Cojo desde oc get sec, el IP de db y modifico en los application.properties de la aplicación Java por el nuevo IP y subo a git
+	7)	skupper gateway expose db 0.0.0.0 25010 --type pod man
+	8)	Cojo desde oc get sec, el IP de db y modifico en los application.properties de la aplicación Java por el nuevo IP y subo a git
 
 ## PASOS TEKTON PIPELINE
 	1)	Login al cluster: oc login
